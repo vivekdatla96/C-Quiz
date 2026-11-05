@@ -75,12 +75,16 @@ public class RegistrationActivity extends AppCompatActivity {
         }
 
         // Store user information (using SharedPreferences for simplicity)
+        // The password is stored as a salted hash, never in plaintext.
+        String salt = PasswordHasher.generateSalt();
+        String passwordHash = PasswordHasher.hash(password, salt);
         SharedPreferences sharedPreferences = getSharedPreferences("CQuizPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString("firstName", firstName);
         editor.putString("lastName", lastName);
         editor.putString("email", email);
-        editor.putString("password", password);
+        editor.putString("passwordSalt", salt);
+        editor.putString("passwordHash", passwordHash);
         editor.putString("dob", dob);
         editor.apply();
 

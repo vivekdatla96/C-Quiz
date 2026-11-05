@@ -5,7 +5,7 @@ An Android quiz app that tests your knowledge of the C programming language.
 ## Features
 
 - Splash screen, then a choice to log in or register
-- Registration and login, with accounts stored on the device in SharedPreferences
+- Registration and login, with accounts stored on the device in SharedPreferences (passwords kept as salted SHA-256 hashes, never plaintext)
 - Game rules screen before the quiz starts
 - Multiple-choice C questions; some have more than one correct answer
 - Result screen with your score

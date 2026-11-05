@@ -32,10 +32,13 @@ public class LoginActivity extends AppCompatActivity {
         // Retrieve stored credentials (using SharedPreferences for simplicity)
         SharedPreferences sharedPreferences = getSharedPreferences("CQuizPrefs", MODE_PRIVATE);
         String registeredEmail = sharedPreferences.getString("email", "");
-        String registeredPassword = sharedPreferences.getString("password", "");
+        String registeredSalt = sharedPreferences.getString("passwordSalt", "");
+        String registeredHash = sharedPreferences.getString("passwordHash", "");
 
         // Validate input against stored credentials
-        if (inputEmail.equals(registeredEmail) && inputPassword.equals(registeredPassword)) {
+        boolean passwordOk = !registeredSalt.isEmpty()
+                && PasswordHasher.matches(inputPassword, registeredSalt, registeredHash);
+        if (inputEmail.equals(registeredEmail) && passwordOk) {
             // Login success
             Toast.makeText(this, "Login Successful", Toast.LENGTH_SHORT).show();
 
